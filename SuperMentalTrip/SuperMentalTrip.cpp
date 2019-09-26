@@ -120,7 +120,7 @@ void displayBackground()
 	}
 }
 
-void displayHexagons()
+void displayOctagons() //funzione per disegnare gli Octagons, se si vuole cambiare forma QUI
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -203,7 +203,7 @@ void displayUI()
 }
 
 //
-// To display onto window using OpenGL commands
+// Funzioni per disegnare scritte e UI in OPENGL
 //
 void display()
 {
@@ -216,7 +216,7 @@ void display()
 		glRotatef(rotation, 0, 0, 1);
 
 	displayBackground();
-	displayHexagons();
+	displayOctagons();
 	displayPlayer();
 	displayUI();
 
@@ -224,7 +224,7 @@ void display()
 }
 
 //
-// key function for ASCII charachters ESC
+// Tasto ESC per uscire dal gioco 
 //
 void ASCIIKeyDown(unsigned char key, int x, int y)
 {
@@ -238,7 +238,7 @@ void ASCIIKeyUp(unsigned char key, int x, int y)
 
 
 //
-// Special Key like F1, F2, F3, Arrow Keys, Page UP, ...
+// Tasto < > per muovere l'input, F2 per mettere in pausa, F1 per restart (Da finire)
 //
 void SpecialKeyDown(int key, int x, int y)
 {
@@ -270,9 +270,9 @@ void SpecialKeyUp(int key, int x, int y)
 }
 
 //
-// This function is called when the window size changes.
-// w : is the new width of the window in pixels.
-// h : is the new height of the window in pixels.
+// Funzione chiamata quando cambiano le dimensioni della finestra
+// w : nuova width della finestra in pixels.
+// h : nuova height della finestra in pixels.
 //
 void reshape(int w, int h)
 {
@@ -289,7 +289,7 @@ void reshape(int w, int h)
 
 void onTimer(int v) {
 	glutTimerFunc(TIMER_PERIOD, onTimer, 0);
-	//initial animation of the game
+	//Animazione iniziale del gioco (da finire)
 	if (game.animate)
 	{
 		timerCount++;
@@ -324,7 +324,7 @@ void onTimer(int v) {
 				octagons[i].scale = initialScale;
 			}
 		}
-		if (timerCount % 25 == 0 && COLOR_CHANGE)
+		if (timerCount % 25 == 0 && COLOR_CHANGE)	//Cambio colore degli elementi della UI
 		{
 			for (int i = 0; i < 4; i++)
 			{
@@ -347,18 +347,17 @@ void onTimer(int v) {
 
 void main(int argc, char* argv[])
 {
+	//Inizializzazione
 	initializeGlobals();
 	srand(time(NULL));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	glutCreateWindow("SuperMentalTrip");
-
+	// Funzioni resize finestra
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	//
-	// keyboard registration
-	//
+	// Funzioni tastiera
 	glutKeyboardFunc(ASCIIKeyDown);
 	glutKeyboardUpFunc(ASCIIKeyUp);
 
