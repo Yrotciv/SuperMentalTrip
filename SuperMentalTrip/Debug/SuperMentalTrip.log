@@ -1,0 +1,23 @@
+﻿  SuperMentalTrip.cpp
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(62,38): warning C4244: '=': conversione da 'double' a 'float'. Possibile perdita di dati.
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(65,55): warning C4305: 'argomento': troncamento da 'double' a 'float'
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(67,24): warning C4305: '=': troncamento da 'double' a 'float'
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(93,22): warning C4244: '=': conversione da 'double' a 'float'. Possibile perdita di dati.
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(109,24): warning C4305: 'argomento': troncamento da 'double' a 'GLfloat'
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(113,22): warning C4244: 'argomento': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(116,20): warning C4244: 'argomento': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(117,19): warning C4244: 'argomento': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(134,23): warning C4244: 'argomento': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(135,25): warning C4244: 'argomento': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(146,25): warning C4244: 'argomento': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(158,25): warning C4305: 'argomento': troncamento da 'double' a 'GLfloat'
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(162,23): warning C4305: 'argomento': troncamento da 'double' a 'GLfloat'
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(183,23): warning C4305: 'argomento': troncamento da 'double' a 'GLfloat'
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(193,23): warning C4305: 'argomento': troncamento da 'double' a 'GLfloat'
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(198,23): warning C4305: 'argomento': troncamento da 'double' a 'GLfloat'
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(296,15): warning C4305: '-=': troncamento da 'double' a 'float'
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(321,36): warning C4305: '*=': troncamento da 'double' a 'float'
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(334,40): warning C4244: '=': conversione da 'double' a 'float'. Possibile perdita di dati.
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(349,1): warning C4326: il tipo restituito di 'main' dovrebbe essere 'int' invece di 'void'
+C:\Users\v_vag\source\repos\SuperMentalTrip\SuperMentalTrip\SuperMentalTrip.cpp(351,12): warning C4244: 'argomento': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
+  SuperMentalTrip.vcxproj -> C:\Users\v_vag\source\repos\SuperMentalTrip\Debug\SuperMentalTrip.exe
