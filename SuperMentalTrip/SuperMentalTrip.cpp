@@ -1,5 +1,13 @@
-// SuperMentalTrip.cpp : Questo file contiene la funzione 'main', in cui inizia e termina l'esecuzione del programma.
-//
+/*			
+				Computer Graphics - Final Project
+
+		Students:	Filippo Lapide
+					Vittoriofranco Vagge
+
+		Project name: SuperMentalTrip 
+
+*/
+
 
 #include <iostream>
 #include <GL/glut.h>
@@ -9,54 +17,55 @@
 #include <string.h>
 #include <time.h>
 
-#define WINDOW_WIDTH 1366
-#define WINDOW_HEIGHT 768
-#define TIMER_PERIOD 25
-#define SCALE_SPEED 1.020 //the scale amount applied to the octagons in every frame
-#define OCTAGON_DELAY 1250 //the amount of miliseconds passed between octagons
-#define COLOR_CHANGE true //true for repeatedly color change, false for no color change
+#define WINDOW_WIDTH 1366	//larghezza schermata di gioco
+#define WINDOW_HEIGHT 768 	//altezza schermata di gioco
+#define TIMER_PERIOD 25 	//periodo che regola il tempo di scalatura degli esagoni
+#define SCALE_SPEED 1.020 	//l'aumento di scala applicata agli ottagoni in ogni fotogramma
+#define OCTAGON_DELAY 1250 	//la quantità di millisecondi che trascorre tra ogni ottagono
+#define COLOR_CHANGE true 	//true per cambiare colore, false per esecusione monocromata di default
 typedef struct {
 	float r, g, b;
 } color_t;
 
 typedef struct {
-	color_t color;	 //randomly generated r,g,b color
-	float scale;	 //scale of the octagon, which increases in time
-	int missingPart; //the empty part of the octagon so that player can pass through
+	color_t color;	 //generatore randomico di colori r,g,b
+	float scale;	 //scalatura dell'ottagono, che aumenta al trascorrere del tempo
+	int missingPart; //la parte mancante dell'ottagono così da permettere il giocatore di attraversarlo
 } octagon_t;
 
 typedef struct {
-	bool isStarted, //checks if the game is started or is over
-		pause,		//checks if the game is paused
+	bool isStarted, //controlla se il gioco sia iniziato o finito
+		pause,		//controlla se il gioco sia in pausa
 		animate;
 } game_control_t;
 
 typedef struct {
-	int current,
-		max = -1;
+	int current,	//punteggio corrente
+		max = -1;	//miglior punteggio
 } score_t;
 
-score_t score; //keeps current and the maximum score
-int width, height;
-game_control_t game;
-octagon_t octagons[4];
-int input = 0;	   //the screen is splitted into 6 parts and as players uses arrow keys, the value of this variable changes accordingly
-int timerCount = 0;//counts how many times timer function runned
-color_t background;//background color
+score_t score;			//mantiene il punteggio attuale e il migliore
+int width, height;		//variabili utili per ridimensionare lo schermo 
+game_control_t game;	//controlla lo stato del gioco
+octagon_t octagons[4];	//numero massimo di ottagoni che compaiono a schermo 
+int input = 0;	   		//lo schermo è diviso in 8 parti e il giocatore usa i tasti delle frecce per spostarsi modificando il valore di questa variabile
+int timerCount = 0;		//tiene il conto di quante volte è stata eseguita la funzione del timer
+color_t background;		//colore del background
 
-float maxScale; //after this scale, the scale of the octagons will be initialized to initialScale
+float maxScale; 	//oltre questo valore la scalatura dell'ottagono sarà inizializzata al valore initialScale
 float initialScale; //
 
-float rotation;	   //rotation of all objects, octagons and players, which changes in time
-float rotateSpeed;//rotation speed, which randomly switch between 1 and 3
+float rotation;		//rotazione di tutti gli oggetti,ottagono e giocatore, i quali cambiano nel tempo
+float rotateSpeed;	//velocità di rotazione, che cambia casualmente tra 1 e 3
 
-float scale;	  //scale of the whole screen, used in the initial animation and in game in general
-void initializeGlobals()
+float scale;	//scala dell'intero schermo, usata per l'animazione iniziale e per il gioco in generale
+
+void initializeGlobals()	//funzione di inizializzazione
 {
 	input = 0;
 	scale = 1;
 	score.current = 0;
-	game.isStarted = true;
+	game.isStarted = true;	//false quando f1 è terminato
 	game.pause = false;
 	game.animate = false;
 	rotateSpeed = (rand() % 100) / 50.0 + 1;
@@ -78,11 +87,7 @@ void initializeGlobals()
 	background = { rand() % 100 / 300.0f, rand() % 100 / 300.0f ,rand() % 100 / 300.0f };
 }
 
-//
-// to draw circle, center at (x,y)
-//  radius r
-//
-void circle(int x, int y, int r)
+void circle(int x, int y, int r)	//funzione per disegnare il giocatore centrato a (x,y) con raggio r
 {
 #define PI 3.1415
 	float angle;
@@ -96,7 +101,7 @@ void circle(int x, int y, int r)
 	glEnd();
 }
 
-void drawString(const char* string)
+void drawString(const char* string)	//font stringhe
 {
 	glPushMatrix();
 	while (*string)
@@ -104,7 +109,7 @@ void drawString(const char* string)
 	glPopMatrix();
 }
 
-void displayBackground()
+void displayBackground()		//funzione che regola la suddivisione e la rotazione dello sfondo
 {
 	glColor4f(0, 0, 0, 0.1);
 	for (int i = 0; i < 4; i++)
