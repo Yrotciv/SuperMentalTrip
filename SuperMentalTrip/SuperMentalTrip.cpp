@@ -166,18 +166,29 @@ void displayPlayer()
 	glPopMatrix();
 }
 
+void displayCredits() {
+	glPushMatrix();
+	if (!game.isStarted && score.max==-1) {
+		glColor3f(1, 1, 1);
+		glTranslatef(-290, -140, 0);
+		glScalef(0.12, 0.12, 0);
+		drawString("Created by Lapide & Vagge                   Esc per uscire");
+	}
+	glPopMatrix();
+}
+
 void displayUI()
 {
 	glPushMatrix();
 	if (!game.isStarted)
 	{
 		glColor4f(0, 0, 0, 0.7);
-		glRectf(-300, -100, 300, 100);
+		glRectf(-300, -150, 300, 150);
 		glColor3f(1, 1, 1);
 		glTranslatef(-150, 0, 0);
 		glScalef(0.3, 0.3, 0);
 		drawString("F1 per iniziare!");
-		glTranslatef(60, -100, 0);
+		glTranslatef(60, -150, 0);
 		glScalef(0.5, 0.5, 0);
 		drawString("Frecce < > per muoversi");
 
@@ -235,6 +246,7 @@ void display()
 	displayOctagons();
 	displayPlayer();
 	displayUI();
+	displayCredits();
 
 	glutSwapBuffers();
 }
