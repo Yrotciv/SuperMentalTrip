@@ -1,10 +1,10 @@
-/*			
+/*
 				Computer Graphics - Final Project
 
 		Students:	Filippo Lapide
 					Vittoriofranco Vagge
 
-		Project name: SuperMentalTrip 
+		Project name: SuperMentalTrip
 
 */
 
@@ -16,6 +16,15 @@
 #include <math.h>
 #include <string.h>
 #include <time.h>
+#include "audiere.h"
+using namespace audiere;
+
+// Funzioni audio
+AudioDevicePtr device(OpenDevice());
+OutputStreamPtr stream(OpenSound(device, "../data/Race_Car.mp3", true));
+OutputStreamPtr gate(OpenSound(device, "../data/gate.mp3", false));
+OutputStreamPtr over(OpenSound(device, "../data/over.mp3", false));
+
 
 #define WINDOW_WIDTH 1366	//larghezza schermata di gioco
 #define WINDOW_HEIGHT 768 	//altezza schermata di gioco
@@ -65,11 +74,14 @@ void initializeGlobals()	//funzione di inizializzazione
 	input = 0;
 	scale = 1;
 	score.current = 0;
-	game.isStarted = true;	//false quando f1 è terminato
+	game.isStarted = false;
 	game.pause = false;
 	game.animate = false;
 	rotateSpeed = (rand() % 100) / 50.0 + 1;
 	rotation = 0;
+	gate->setVolume(0.5f);
+	stream->setVolume(0.3f);
+	over->setVolume(0.5f);
 	float frameNeeded = OCTAGON_DELAY / TIMER_PERIOD;
 	float scaleMultiplier = powf(SCALE_SPEED, frameNeeded);
 	float octagonScales[4];
@@ -150,15 +162,14 @@ void displayPlayer()
 	glColor3f(1, 1, 1);
 	glRotatef(input * 45.0 + rotation, 0, 0, 1);
 	glTranslatef(0, -200, 0);
-	circle(0, 0, 5);
+	circle(0, 0, 7);
 	glPopMatrix();
 }
 
 void displayUI()
 {
 	glPushMatrix();
-	//if (!game.isStarted)
-	if (false)
+	if (!game.isStarted)
 	{
 		glColor4f(0, 0, 0, 0.7);
 		glRectf(-300, -100, 300, 100);
@@ -201,7 +212,7 @@ void displayUI()
 		glPushMatrix();
 		glTranslatef(230, -280, 0);
 		glScalef(0.1, 0.1, 0);
-		//drawString("F1 reset");
+		drawString("F1 reset");
 	}
 	glPopMatrix();
 
@@ -243,7 +254,7 @@ void ASCIIKeyUp(unsigned char key, int x, int y)
 
 
 //
-// Tasto < > per muovere l'input, F2 per mettere in pausa, F1 per restart (Da finire)
+// Tasto < > per muovere l'input, F2 per mettere in pausa, F1 per restart
 //
 void SpecialKeyDown(int key, int x, int y)
 {
@@ -258,13 +269,13 @@ void SpecialKeyDown(int key, int x, int y)
 			break;
 		}
 	}
-	//if (key == GLUT_KEY_F1)
-	//{
-	//	initializeGlobals();
-	//	game.animate = true;
-	//	scale = 9;
+	if (key == GLUT_KEY_F1)
+	{
+		initializeGlobals();
+		game.animate = true;
+		scale = 9;
 
-	//}
+	}
 	else if (key == GLUT_KEY_F2)
 		game.pause = !game.pause;
 }
@@ -294,7 +305,8 @@ void reshape(int w, int h)
 
 void onTimer(int v) {
 	glutTimerFunc(TIMER_PERIOD, onTimer, 0);
-	//Animazione iniziale del gioco (da finire)
+
+	//Animazione iniziale del gioco
 	if (game.animate)
 	{
 		timerCount++;
@@ -317,12 +329,16 @@ void onTimer(int v) {
 			if (fabs(octagons[i].scale - 1.130) < 0.01)
 				if (input != octagons[i].missingPart)
 				{
+					over->play();
 					game.isStarted = false;
 					if (score.current > score.max)
 						score.max = score.current;
 				}
-				else
+				else {
 					score.current++;
+					if (gate->isPlaying()) gate->reset();
+					else gate->play();
+				}
 			octagons[i].scale *= SCALE_SPEED;
 			if (octagons[i].scale >= maxScale)
 			{
@@ -365,6 +381,12 @@ void main(int argc, char* argv[])
 	// Funzioni tastiera
 	glutKeyboardFunc(ASCIIKeyDown);
 	glutKeyboardUpFunc(ASCIIKeyUp);
+	// Funzioni audio
+	if (!device) {
+		return;
+	}
+	stream->setRepeat(true);
+	stream->play();
 
 	glutSpecialFunc(SpecialKeyDown);
 	glutSpecialUpFunc(SpecialKeyUp);
